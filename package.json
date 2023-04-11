@@ -9,12 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint ./src --ext ts,tsx",
     "lint:fix": "eslint ./src --ext ts,tsx --fix",
+    "pre-commit": "pretty-quick --staged && npx lint-staged",
     "prepare": "husky install && husky add .husky/pre-commit 'pnpm run pre-commit'"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   },
   "dependencies": {
     "@tanstack/react-query": "^4.29.1",
