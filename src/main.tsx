@@ -1,3 +1,4 @@
+import '@unocss/reset/tailwind-compat.css';
 import 'tdesign-react/es/style/index.css';
 import 'virtual:uno.css';
 
