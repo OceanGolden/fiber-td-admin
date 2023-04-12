@@ -3,3 +3,5 @@ mock
 config
 public
 scripts
+node_modules
+/node_modules/**

@@ -10,9 +10,6 @@ const DEFAULT_CACHE_TIME = 60 * 5;
 export const createStorage = () => {
   const storage = localStorage;
   // private storage = sessionStorage;
-  const prefixKey = '';
-
-  const getKey = (key: string) => `${prefixKey}${key}`;
 
   /**
    * @description 设置缓存
@@ -20,12 +17,9 @@ export const createStorage = () => {
    * @param {*} value 缓存值
    * @param expire
    */
-  const set = (key: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) => {
-    const stringData = JSON.stringify({
-      value,
-      expire: expire !== null ? new Date().getTime() + expire * 1000 : null,
-    });
-    storage.setItem(getKey(key), stringData);
+  const set = (key: string, value: any) => {
+    const stringData = JSON.stringify(value);
+    storage.setItem(key, stringData);
   };
 
   /**
@@ -33,30 +27,16 @@ export const createStorage = () => {
    * @param {string} key
    */
   const remove = (key: string) => {
-    storage.removeItem(getKey(key));
+    storage.removeItem(key);
   };
 
   /**
    * 读取缓存
    * @param {string} key 缓存键
-   * @param {*=} def 默认值
    */
-  const get = <T = any>(key: string, def: any = null): T => {
-    const item = storage.getItem(getKey(key));
-    if (item) {
-      try {
-        const data = JSON.parse(item);
-        const { value, expire } = data;
-        // 在有效期内直接返回
-        if (expire === null || expire >= Date.now()) {
-          return value;
-        }
-        remove(getKey(key));
-      } catch (e) {
-        return def;
-      }
-    }
-    return def;
+  const get = (key: string) => {
+    const item = storage.getItem(key);
+    return item;
   };
 
   /**
@@ -75,8 +55,12 @@ export const createStorage = () => {
    * 如果过期时间为设置，默认关闭浏览器自动删除
    * @example
    */
-  const setCookie = (name: string, value: any, expire: number | null = DEFAULT_CACHE_TIME) => {
-    document.cookie = `${getKey(name)}=${value}; Max-Age=${expire}`;
+  const setCookie = (
+    name: string,
+    value: any,
+    expire: number | null = DEFAULT_CACHE_TIME,
+  ) => {
+    document.cookie = `${name}=${value}; Max-Age=${expire}`;
   };
 
   /**
@@ -87,7 +71,7 @@ export const createStorage = () => {
     const cookieArr = document.cookie.split('; ');
     for (let i = 0, { length } = cookieArr; i < length; i++) {
       const kv = cookieArr[i].split('=');
-      if (kv[0] === getKey(name)) {
+      if (kv[0] === name) {
         return kv[1];
       }
     }
@@ -114,7 +98,16 @@ export const createStorage = () => {
     }
   };
 
-  return { set, get, remove, clear, getCookie, setCookie, removeCookie, clearCookie };
+  return {
+    set,
+    get,
+    remove,
+    clear,
+    getCookie,
+    setCookie,
+    removeCookie,
+    clearCookie,
+  };
 };
 
 const Storage = createStorage();
