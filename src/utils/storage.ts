@@ -36,7 +36,11 @@ export const createStorage = () => {
    */
   const get = (key: string) => {
     const item = storage.getItem(key);
-    return item;
+    if (item) {
+      return JSON.parse(item);
+    }
+    return null;
+    // return JSON.stringify(item);
   };
 
   /**

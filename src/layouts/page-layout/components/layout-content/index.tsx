@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Layout } from 'tdesign-react';
 
 const LayoutContent = () => (
-  <Layout.Content className='flex flex-col bg-arco-fill-2 transition duration-200'>
+  <Layout.Content className='flex flex-col transition duration-200'>
     {/* <Breadcrumb /> */}
     <div className='px-6 py-4 h-full'>
       <Outlet />

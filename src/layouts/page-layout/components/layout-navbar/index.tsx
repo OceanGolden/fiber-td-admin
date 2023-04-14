@@ -1,5 +1,6 @@
-import Logo from '@/assets/logo.svg';
 import { Input, Layout, Space } from 'tdesign-react';
+
+import Logo from '@/assets/logo.svg';
 import UserInfo from './components/user-info';
 
 const LayoutHeader = () => (
