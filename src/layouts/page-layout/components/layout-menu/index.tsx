@@ -1,7 +1,9 @@
+import { Button, Menu } from 'tdesign-react';
+import { Icon, ViewListIcon } from 'tdesign-icons-react';
+
 import type { MenuRecord } from '@/api/system/menu/types';
 import useMenus from '@/hooks/use_menu';
-import { Icon } from 'tdesign-icons-react';
-import { Menu } from 'tdesign-react';
+import { useToggle } from 'react-use';
 
 const renderMenu = (menus: MenuRecord[]) =>
   // const navigate = useNavigate();
@@ -35,13 +37,21 @@ const renderMenu = (menus: MenuRecord[]) =>
   });
 const LayoutMenu = () => {
   const [menus] = useMenus();
+  const [collapsed, toggle] = useToggle(false);
   return (
     <Menu
-      className='shrink-0 h-full overflow-y-auto'
-      collapsed={false}
+      className='h-full flex shrink-0 flex-col'
+      collapsed={collapsed}
       expandMutex={true}
       expandType='normal'
-      width='220'
+      operations={
+        <Button
+          variant='text'
+          shape='square'
+          icon={<ViewListIcon />}
+          onClick={toggle}
+        />
+      }
     >
       {renderMenu(menus)}
     </Menu>

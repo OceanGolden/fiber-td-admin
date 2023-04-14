@@ -1,19 +1,19 @@
 import { Layout } from 'tdesign-react';
 import LayoutContent from './components/layout-content';
 import LayoutFooter from './components/layout-footer';
+import LayoutHeader from './components/layout-header';
 import LayoutMenu from './components/layout-menu';
-import LayoutHeader from './components/layout-navbar';
 
 const PageLayout = () => (
-  <Layout className='h-screen w-screen flex flex-col'>
-    <LayoutHeader />
+  <Layout className='h-screen flex flex-col'>
     <Layout>
-      <Layout.Aside>
+      <LayoutHeader />
+      <Layout direction='horizontal'>
         <LayoutMenu />
-      </Layout.Aside>
-      <Layout>
-        <LayoutContent />
-        <LayoutFooter />
+        <Layout>
+          <LayoutContent />
+          <LayoutFooter />
+        </Layout>
       </Layout>
     </Layout>
   </Layout>
