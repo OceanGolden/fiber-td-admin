@@ -3,12 +3,13 @@ import { selectAtom } from 'jotai/utils';
 import { userInfoAsyncAtom } from './user_atom';
 
 import type { UserInfoState } from '@/api/auth/types';
-// export const menuAsyncAtom = atom(async (get) => {
+
+// export const permissionAsyncAtom = atom(async (get) => {
 //   const infoAtom = await get(userInfoAsyncAtom);
-//   return infoAtom.menus;
+//   return infoAtom.permissions;
 // });
 
-export const menusAtom = selectAtom(
+export const permissionsAtom = selectAtom(
   userInfoAsyncAtom,
-  (s: UserInfoState) => s.menus,
+  (s: UserInfoState) => s.permissions,
 );

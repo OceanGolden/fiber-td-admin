@@ -1,9 +1,31 @@
-import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 
+import { MenuRecord } from '@/api/system/menu/types';
 import PageLayout from '@/layouts/page-layout';
 import Login from '@/pages/auth/login';
-import Organization from '@/pages/system/organization';
-import Staff from '@/pages/system/staff';
+import Exception404 from '@/pages/system/exception/404';
+import Home from '@/pages/system/home';
+
+import { LoadablePage } from '../components/lazy_component/index';
+
+export const generateRoutesFromMenus = (menus: MenuRecord[]): RouteObject[] => {
+  const routes: RouteObject[] = [];
+  menus.map((item) =>
+    routes.push({
+      path: item.path,
+      id: item.id,
+      element: item.component ? (
+        <LoadablePage path={item.component} />
+      ) : (
+        <PageLayout />
+      ),
+      children: item.children
+        ? [...generateRoutesFromMenus(item.children)]
+        : undefined,
+    }),
+  );
+  return routes;
+};
 
 export const defaultRoutes: RouteObject[] = [
   {
@@ -11,20 +33,12 @@ export const defaultRoutes: RouteObject[] = [
     element: <Login />,
   },
   {
-    path: '/home',
-    element: <PageLayout />,
-  },
-  {
-    path: '/system',
+    path: '/home/*',
     element: <PageLayout />,
     children: [
       {
-        path: '/system/staffs',
-        element: <Staff />,
-      },
-      {
-        path: '/system/organizations',
-        element: <Organization />,
+        index: true,
+        element: <Home />,
       },
     ],
   },
@@ -41,10 +55,6 @@ export const defaultRoutes: RouteObject[] = [
   // },
   {
     path: '*',
-    element: <div>404</div>,
+    element: <Exception404 />,
   },
 ];
-
-const router = createBrowserRouter(defaultRoutes);
-
-export default router;

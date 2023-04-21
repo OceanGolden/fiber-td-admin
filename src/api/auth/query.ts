@@ -1,8 +1,9 @@
-import * as AuthService from './service';
-
 import { DialogPlugin, MessagePlugin } from 'tdesign-react';
 
 import { useMutation } from '@tanstack/react-query';
+
+import * as AuthService from './service';
+
 import type { LoginRequest } from './types';
 
 export const useLoginMutation = (title = '登录') =>
@@ -28,7 +29,7 @@ export const useLoginMutation = (title = '登录') =>
 
 export const useLogoutMutation = () => {
   const logoutMutation = useMutation({
-    mutationFn: () => AuthService.logout(),
+    mutationFn: AuthService.logout,
     onMutate: () => {
       MessagePlugin.loading(`正在登出中...`);
     },
@@ -42,27 +43,28 @@ export const useLogoutMutation = () => {
     },
   });
 
-  const confirmLogout = (success: () => void) => {
+  const confirmLogout = (callback: () => void) => {
     const confirmDialog = DialogPlugin.confirm({
       destroyOnClose: true,
       theme: 'warning',
       header: '温馨提示',
       body: `确认退出当前用户?`,
-      confirmBtn: { content: '去意已决', theme: 'warning' },
+      confirmBtn: {
+        content: '去意已决',
+        theme: 'warning',
+        loading: logoutMutation.isLoading,
+      },
       cancelBtn: '再想想',
       onConfirm: () =>
         logoutMutation.mutate(undefined, {
           onSuccess: (data) => {
-            confirmDialog.hide();
-            confirmDialog.destroy();
             if (data) {
-              success();
+              callback();
             }
+            confirmDialog.hide();
           },
         }),
-      onClose: () => {
-        confirmDialog.hide();
-      },
+      onClose: () => confirmDialog.hide(),
     });
   };
 

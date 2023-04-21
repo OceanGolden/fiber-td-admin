@@ -1,6 +1,5 @@
+import 'virtual:windi.css';
 import 'tdesign-react/es/style/index.css';
-import 'virtual:uno.css';
-import './assets/styles/normalize.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';

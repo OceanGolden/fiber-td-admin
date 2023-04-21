@@ -1,10 +1,10 @@
-import { Layout } from 'tdesign-react';
 import { Outlet } from 'react-router-dom';
+import { Layout } from 'tdesign-react';
 
 const LayoutContent = () => (
   <Layout.Content className='flex flex-col'>
     {/* <Breadcrumb /> */}
-    <div className='x-6 flex py-4'>
+    <div className='flex px-6 py-4'>
       <Outlet />
     </div>
   </Layout.Content>

@@ -1,16 +1,15 @@
 import { Input, Layout, Space } from 'tdesign-react';
 
-import Logo from '@/assets/logo.svg';
-import UserInfo from './components/user-info';
+import Logo from '@/assets/svg/logo.svg';
+
+import UserInfo from './components/user_info';
 
 const LayoutHeader = () => (
   <Layout.Header className='sticky inset-0 z-101 flex shrink-0 justify-between shadow'>
-    <div className='flex items-center'>
-      <div className='flex items-center pl-6'>
-        <img src={Logo} alt='Fiber TDesign Admin Logo' />
-      </div>
-      <h1 className='flex items-center pl-3 text-lg'>Fiber Arco Pro</h1>
-    </div>
+    <Space className='flex items-center pl-2'>
+      <img src={Logo} alt='Fiber Dashboard Logo' />
+      <p className='font-bold'>Fiber Dashboard</p>
+    </Space>
     <div className='flex items-center pr-6'>
       <Space size='medium' align='center'>
         <Input type='search' className='rounded-xl' placeholder={'搜索'} />
