@@ -1,4 +1,4 @@
-import { RouteObject } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 
 import { MenuRecord } from '@/api/system/menu/types';
 import PageLayout from '@/layouts/page-layout';
@@ -6,7 +6,7 @@ import Login from '@/pages/auth/login';
 import Exception404 from '@/pages/system/exception/404';
 import Home from '@/pages/system/home';
 
-import { LoadablePage } from '../components/lazy_component/index';
+import { LoadablePage } from '../components/lazy-component/index';
 
 export const generateRoutesFromMenus = (menus: MenuRecord[]): RouteObject[] => {
   const routes: RouteObject[] = [];

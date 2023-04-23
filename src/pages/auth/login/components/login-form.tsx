@@ -42,8 +42,9 @@ const LoginForm = () => {
 
   return (
     <div>
-      <p className='text-shadow-sm text-5xl font-bold mb-16'>欢迎回来</p>
-
+      <p className='text-center drop-shadow-2xl text-5xl font-bold mb-6'>
+        欢迎回来
+      </p>
       <Form
         ref={formRef}
         onSubmit={onSubmit}
@@ -56,6 +57,7 @@ const LoginForm = () => {
               theme='error'
               message={errorMessage}
               close
+              onClose={() => setErrorMessage('')}
             />
           )}
         </Form.FormItem>

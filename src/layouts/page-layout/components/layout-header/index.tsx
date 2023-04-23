@@ -2,7 +2,7 @@ import { Input, Layout, Space } from 'tdesign-react';
 
 import Logo from '@/assets/svg/logo.svg';
 
-import UserInfo from './components/user_info';
+import UserInfo from './components/user-info';
 
 const LayoutHeader = () => (
   <Layout.Header className='sticky inset-0 z-101 flex shrink-0 justify-between shadow'>

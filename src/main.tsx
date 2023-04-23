@@ -1,4 +1,4 @@
-import 'virtual:windi.css';
+import '@/assets/styles/index.css';
 import 'tdesign-react/es/style/index.css';
 
 import React from 'react';
