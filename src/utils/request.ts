@@ -1,12 +1,10 @@
-import type { AxiosError, AxiosResponse } from 'axios';
-
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import { Token } from '@/common/constants';
 
 import Storage from './storage';
 
-import type { HttpResponse } from '@/common/types';
+import type { IHttpResponse } from '@/common/types';
 
 const instance = axios.create({
   baseURL: '/api',
@@ -28,11 +26,11 @@ instance.interceptors.request.use(
 
 // 拦截响应
 instance.interceptors.response.use(
-  (response: AxiosResponse<HttpResponse>) => {
+  (response: AxiosResponse<IHttpResponse>) => {
     const { data } = response.data;
     return data;
   },
-  (error: AxiosError<HttpResponse>) => {
+  (error: AxiosError<IHttpResponse>) => {
     const { response } = error;
     if (response) {
       const { message } = response.data;

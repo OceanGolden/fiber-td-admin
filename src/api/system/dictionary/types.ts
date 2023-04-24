@@ -1,4 +1,4 @@
-export interface DictionaryRecord {
+export interface IDictionaryRecord {
   id: string;
   name: string;
   code: string;
@@ -9,7 +9,7 @@ export interface DictionaryRecord {
   updated_by: string;
 }
 
-export interface DictionaryParams {
+export interface IDictionaryParams {
   name: string;
   code: string;
   status: string;
@@ -18,7 +18,7 @@ export interface DictionaryParams {
   pageSize: number;
 }
 
-export interface DictionaryRequest {
+export interface IDictionaryRequest {
   id: string;
   name: string;
   code: string;

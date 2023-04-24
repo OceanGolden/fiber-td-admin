@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface MenuRecord {
+export interface IMenuRecord {
   id: string;
   name: string;
   parent_id: string;
@@ -18,10 +18,10 @@ export interface MenuRecord {
   remark: string;
   updated_at: number;
   updated_by: string;
-  children?: MenuRecord[];
+  children?: IMenuRecord[];
 }
 
-export interface MenuRecordWithIcon {
+export interface IMenuRecordWithIcon {
   id: string;
   name: string;
   parent_id: string;
@@ -39,10 +39,10 @@ export interface MenuRecordWithIcon {
   remark: string;
   updated_at: number;
   updated_by: string;
-  children?: MenuRecord[];
+  children?: IMenuRecord[];
 }
 
-export interface MenuParams {
+export interface IMenuParams {
   name: string;
   status: string;
   remark: string;
@@ -50,7 +50,7 @@ export interface MenuParams {
   pageSize: number;
 }
 
-export interface MenuRequest {
+export interface IMenuRequest {
   id: string;
   name: string;
   parent_id: string;

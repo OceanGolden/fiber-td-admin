@@ -1,4 +1,4 @@
-export interface PositionRecord {
+export interface IPositionRecord {
   id: string;
   name: string;
   code: string;
@@ -9,7 +9,7 @@ export interface PositionRecord {
   updated_by: string;
 }
 
-export interface PositionParams {
+export interface IPositionParams {
   name: string;
   code: string;
   status: string;
@@ -18,7 +18,7 @@ export interface PositionParams {
   pageSize: number;
 }
 
-export interface PositionRequest {
+export interface IPositionRequest {
   id: string;
   name: string;
   code: string;

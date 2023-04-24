@@ -1,45 +1,46 @@
-import type { PageResponse } from '@/common/types';
+import type { IPageResponse } from '@/common/types';
 import type { UseQueryOptions } from '@tanstack/react-query';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import * as RoleService from './service';
-
 import { DialogPlugin, MessagePlugin } from 'tdesign-react';
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+import * as RoleService from './service';
+
 import type {
-  RoleMenuParams,
-  RoleMenuRecord,
-  RoleMenuRequest,
-  RoleParams,
-  RoleRecord,
-  RoleRequest,
+  IRoleMenuParams,
+  IRoleMenuRecord,
+  IRoleMenuRequest,
+  IRoleParams,
+  IRoleRecord,
+  IRoleRequest,
 } from './types';
 
 export enum QueryKeys {
   query = 'role-query',
 }
 
-export const useRoles = (params: Partial<RoleParams>) =>
-  useQuery<PageResponse<RoleRecord>>({
+export const useRoles = (params: Partial<IRoleParams>) =>
+  useQuery<IPageResponse<IRoleRecord>>({
     queryKey: [QueryKeys.query, params],
     queryFn: () => RoleService.query(params),
     keepPreviousData: true,
   });
 
 export const useRolesAll = (
-  params: Partial<RoleParams>,
-  options?: UseQueryOptions<RoleRecord[]>,
+  params: Partial<IRoleParams>,
+  options?: UseQueryOptions<IRoleRecord[]>,
 ) =>
-  useQuery<RoleRecord[]>({
+  useQuery<IRoleRecord[]>({
     queryKey: [QueryKeys.query, 'all', params],
     queryFn: () => RoleService.queryAll(params),
     ...options,
   });
 
 export const useGrantMenus = (
-  params: RoleMenuParams,
-  options?: UseQueryOptions<RoleMenuRecord[]>,
+  params: IRoleMenuParams,
+  options?: UseQueryOptions<IRoleMenuRecord[]>,
 ) =>
-  useQuery<RoleMenuRecord[]>({
+  useQuery<IRoleMenuRecord[]>({
     queryKey: [QueryKeys.query, params],
     queryFn: () => RoleService.queryMenus(params),
     ...options,
@@ -48,7 +49,7 @@ export const useGrantMenus = (
 export const useRoleMutation = (title = '新增') => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: Partial<RoleRequest>) => {
+    mutationFn: (req: Partial<IRoleRequest>) => {
       const submit = req.id ? RoleService.update : RoleService.create;
       return submit(req);
     },
@@ -70,7 +71,7 @@ export const useRoleMutation = (title = '新增') => {
 export const useRoleMenuMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: Partial<RoleMenuRequest>) => {
+    mutationFn: (req: Partial<IRoleMenuRequest>) => {
       const submit = RoleService.grantMenus;
       return submit(req);
     },
@@ -95,7 +96,7 @@ export const useRoleMenuMutation = () => {
 export const useRoleDelete = () => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
-    mutationFn: (req: Partial<RoleRequest>) => RoleService.remove(req),
+    mutationFn: (req: Partial<IRoleRequest>) => RoleService.remove(req),
     onMutate: (variables) => {
       MessagePlugin.loading(`正在删除${variables.name}数据...`);
     },
@@ -110,7 +111,7 @@ export const useRoleDelete = () => {
   });
 
   const confirmRemove = (
-    record: Partial<RoleRecord>,
+    record: Partial<IRoleRecord>,
     onSuccess: () => boolean,
   ) => {
     const confirmDialog = DialogPlugin.confirm({

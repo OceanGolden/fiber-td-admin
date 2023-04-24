@@ -1,4 +1,4 @@
-export interface DictionaryItemRecord {
+export interface IDictionaryItemRecord {
   id: string;
   label: string;
   value: string;
@@ -11,7 +11,7 @@ export interface DictionaryItemRecord {
   updated_by: string;
 }
 
-export interface DictionaryItemParams {
+export interface IDictionaryItemParams {
   label: string;
   value: string;
   dictionary_id: string;
@@ -22,7 +22,7 @@ export interface DictionaryItemParams {
   total: number;
 }
 
-export interface DictionaryItemRequest {
+export interface IDictionaryItemRequest {
   id: string;
   label: string;
   value: string;

@@ -1,4 +1,4 @@
-export interface OrganizationRecord {
+export interface IOrganizationRecord {
   id: string;
   name: string;
   code: string;
@@ -9,10 +9,10 @@ export interface OrganizationRecord {
   remark: string;
   updated_at: number;
   updated_by: string;
-  children: OrganizationRecord[];
+  children: IOrganizationRecord[];
 }
 
-export interface OrganizationParams {
+export interface IOrganizationParams {
   name: string;
   code: string;
   status: string;
@@ -21,7 +21,7 @@ export interface OrganizationParams {
   pageSize: number;
 }
 
-export interface OrganizationRequest {
+export interface IOrganizationRequest {
   id: string;
   name: string;
   code: string;

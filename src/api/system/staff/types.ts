@@ -1,4 +1,4 @@
-export interface StaffRecord {
+export interface IStaffRecord {
   id: string;
   username: string;
   name: string;
@@ -17,7 +17,7 @@ export interface StaffRecord {
   updated_by: string;
 }
 
-export interface StaffParams {
+export interface IStaffParams {
   username: string;
   name: string;
   email: string;
@@ -31,7 +31,7 @@ export interface StaffParams {
   pageSize: number;
 }
 
-export interface StaffRequest {
+export interface IStaffRequest {
   id: string;
   username: string;
   name: string;
@@ -47,7 +47,7 @@ export interface StaffRequest {
   remark: string;
 }
 
-export interface StaffRoleRequest {
+export interface IStaffRoleRequest {
   staff_id: string;
   role_ids: string[];
 }

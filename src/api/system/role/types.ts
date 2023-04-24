@@ -1,4 +1,4 @@
-export interface RoleRecord {
+export interface IRoleRecord {
   id: string;
   name: string;
   code: string;
@@ -9,7 +9,7 @@ export interface RoleRecord {
   updated_by: string;
 }
 
-export interface RoleParams {
+export interface IRoleParams {
   name: string;
   code: string;
   status: string;
@@ -18,7 +18,7 @@ export interface RoleParams {
   pageSize: number;
 }
 
-export interface RoleRequest {
+export interface IRoleRequest {
   id: string;
   name: string;
   code: string;
@@ -27,7 +27,7 @@ export interface RoleRequest {
   remark: string;
 }
 
-export interface RoleMenuRecord {
+export interface IRoleMenuRecord {
   id: string;
   role_id: string;
   menu_id: string;
@@ -35,11 +35,11 @@ export interface RoleMenuRecord {
   created_by: string;
 }
 
-export interface RoleMenuParams {
+export interface IRoleMenuParams {
   role_id: string;
 }
 
-export interface RoleMenuRequest {
+export interface IRoleMenuRequest {
   role_id: string;
   menu_ids: string[];
 }

@@ -1,9 +1,11 @@
 import { DialogPlugin, MessagePlugin } from 'tdesign-react';
-import * as MenuService from './service';
 
 import { SystemStatus, SystemTreeRoot } from '@/common/constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { MenuParams, MenuRecord, MenuRequest } from './types';
+
+import * as MenuService from './service';
+
+import type { IMenuParams, IMenuRecord, IMenuRequest } from './types';
 
 import type { UseQueryOptions } from '@tanstack/react-query';
 
@@ -12,10 +14,10 @@ export enum QueryKeys {
 }
 
 export const useMenus = (
-  params: Partial<MenuParams>,
-  options?: UseQueryOptions<MenuRecord[]>,
+  params: Partial<IMenuParams>,
+  options?: UseQueryOptions<IMenuRecord[]>,
 ) => {
-  const queryInfo = useQuery<MenuRecord[]>({
+  const queryInfo = useQuery<IMenuRecord[]>({
     queryKey: [QueryKeys.query, params],
     queryFn: () => MenuService.queryTreeAll(params),
     ...options,
@@ -27,16 +29,16 @@ export const useMenus = (
         id: SystemTreeRoot.Root as string,
         name: '根目录',
         status: SystemStatus.Enable as string,
-      } as MenuRecord,
+      } as IMenuRecord,
     ].concat(queryInfo.data || []),
   };
 };
 
 export const useMenusTree = (
   token: string,
-  options?: UseQueryOptions<MenuRecord[]>,
+  options?: UseQueryOptions<IMenuRecord[]>,
 ) => {
-  const queryInfo = useQuery<MenuRecord[]>({
+  const queryInfo = useQuery<IMenuRecord[]>({
     queryKey: [QueryKeys.query, { token }],
     queryFn: () => MenuService.queryTree(),
     ...options,
@@ -49,7 +51,7 @@ export const useMenusTree = (
 export const useMenuMutation = (title = '新增') => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: Partial<MenuRequest>) => {
+    mutationFn: (req: Partial<IMenuRequest>) => {
       const submit = req.id ? MenuService.update : MenuService.create;
       return submit(req);
     },
@@ -71,7 +73,7 @@ export const useMenuMutation = (title = '新增') => {
 export const useMenuDelete = () => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation(
-    (req: Partial<MenuRequest>) => MenuService.remove(req),
+    (req: Partial<IMenuRequest>) => MenuService.remove(req),
     {
       onMutate: (variables) => {
         MessagePlugin.loading(`正在删除${variables.name}数据...`);
@@ -88,7 +90,7 @@ export const useMenuDelete = () => {
     },
   );
 
-  const confirmRemove = (record: Partial<MenuRecord>) => {
+  const confirmRemove = (record: Partial<IMenuRecord>) => {
     const confirmDialog = DialogPlugin.confirm({
       destroyOnClose: true,
       header: '确认删除当前所选菜单?',

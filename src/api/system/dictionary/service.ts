@@ -1,30 +1,31 @@
-import type { PageResponse } from '@/common/types';
+import type { IPageResponse } from '@/common/types';
 import request from '@/utils/request';
-import type { DictionaryItemRecord } from '../dictionary_item/types';
+
+import type { IDictionaryItemRecord } from '../dictionary_item/types';
 import type {
-  DictionaryParams,
-  DictionaryRecord,
-  DictionaryRequest,
+  IDictionaryParams,
+  IDictionaryRecord,
+  IDictionaryRequest,
 } from './types';
 
 const URL = '/system/dictionaries';
 
 export const query = async (
-  params: Partial<DictionaryParams>,
-): Promise<PageResponse<DictionaryRecord>> => request.get(URL, { params });
+  params: Partial<IDictionaryParams>,
+): Promise<IPageResponse<IDictionaryRecord>> => request.get(URL, { params });
 
 export const queryItems = async (
   code: string,
-): Promise<DictionaryItemRecord[]> =>
+): Promise<IDictionaryItemRecord[]> =>
   request.get(`${URL}/items`, {
     params: { code },
   });
 
-export const create = async (data: Partial<DictionaryRequest>) =>
+export const create = async (data: Partial<IDictionaryRequest>) =>
   request.post(URL, data);
 
-export const update = async (data: Partial<DictionaryRequest>) =>
+export const update = async (data: Partial<IDictionaryRequest>) =>
   request.put(URL, data);
 
-export const remove = async (data: Partial<DictionaryRequest>) =>
+export const remove = async (data: Partial<IDictionaryRequest>) =>
   request.delete(URL, { data });

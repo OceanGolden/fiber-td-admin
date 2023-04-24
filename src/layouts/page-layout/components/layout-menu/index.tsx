@@ -1,15 +1,15 @@
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useToggle } from 'react-use';
 import { Icon, ViewListIcon } from 'tdesign-icons-react';
 import { Button, Menu } from 'tdesign-react';
 
 import { menusAtom } from '@/atom/menu_atom';
 import { routesAtom } from '@/atom/route_atom';
+import useToggle from '@/hooks/use_toggle';
 import { defaultRoutes, generateRoutesFromMenus } from '@/router';
 
-import type { MenuRecord } from '@/api/system/menu/types';
+import type { IMenuRecord } from '@/api/system/menu/types';
 
 const LayoutMenu = () => {
   const menus = useAtomValue(menusAtom);
@@ -23,7 +23,7 @@ const LayoutMenu = () => {
     [menus],
   );
 
-  const renderMenu = (menuList: MenuRecord[]) => {
+  const renderMenu = (menuList: IMenuRecord[]) => {
     if (!menuList) {
       return [];
     }

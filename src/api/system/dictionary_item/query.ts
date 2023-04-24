@@ -1,12 +1,15 @@
-import type { PageResponse } from '@/common/types';
+import type { IPageResponse } from '@/common/types';
 import type { UseQueryOptions } from '@tanstack/react-query';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { DialogPlugin, MessagePlugin } from 'tdesign-react';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import * as DictionaryItemService from './service';
+
 import type {
-  DictionaryItemParams,
-  DictionaryItemRecord,
-  DictionaryItemRequest,
+  IDictionaryItemParams,
+  IDictionaryItemRecord,
+  IDictionaryItemRequest,
 } from './types';
 
 export enum QueryKeys {
@@ -14,10 +17,10 @@ export enum QueryKeys {
 }
 
 export const useDictionaryItems = (
-  params: Partial<DictionaryItemParams>,
-  options?: UseQueryOptions<PageResponse<DictionaryItemRecord>>,
+  params: Partial<IDictionaryItemParams>,
+  options?: UseQueryOptions<IPageResponse<IDictionaryItemRecord>>,
 ) => {
-  const queryInfo = useQuery<PageResponse<DictionaryItemRecord>>({
+  const queryInfo = useQuery<IPageResponse<IDictionaryItemRecord>>({
     queryKey: [QueryKeys.query, params],
     queryFn: () => DictionaryItemService.query(params),
     keepPreviousData: true,
@@ -29,7 +32,7 @@ export const useDictionaryItems = (
 export const useDictionaryItemMutation = (title = '新增') => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: Partial<DictionaryItemRequest>) => {
+    mutationFn: (req: Partial<IDictionaryItemRequest>) => {
       const submit = req.id
         ? DictionaryItemService.update
         : DictionaryItemService.create;
@@ -53,7 +56,7 @@ export const useDictionaryItemMutation = (title = '新增') => {
 export const useDictionaryItemDelete = () => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
-    mutationFn: (req: Partial<DictionaryItemRequest>) =>
+    mutationFn: (req: Partial<IDictionaryItemRequest>) =>
       DictionaryItemService.remove(req),
     onMutate: (variables) => {
       MessagePlugin.loading(`正在删除${variables.label}数据...`);
@@ -69,7 +72,7 @@ export const useDictionaryItemDelete = () => {
   });
 
   const confirmRemove = (
-    record: Partial<DictionaryItemRecord>,
+    record: Partial<IDictionaryItemRecord>,
     onSuccess: () => boolean,
   ) => {
     const confirmDialog = DialogPlugin.confirm({

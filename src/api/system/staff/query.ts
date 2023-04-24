@@ -1,22 +1,23 @@
+import { DialogPlugin, MessagePlugin } from 'tdesign-react';
+
+import { IPageResponse } from '@/common/types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import * as StaffService from './service';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { DialogPlugin, MessagePlugin } from 'tdesign-react';
 import type {
-  StaffParams,
-  StaffRecord,
-  StaffRequest,
-  StaffRoleRequest,
+  IStaffParams,
+  IStaffRecord,
+  IStaffRequest,
+  IStaffRoleRequest,
 } from './types';
-
-import { PageResponse } from '@/common/types';
 
 export enum QueryKeys {
   query = 'staff-query',
 }
 
-export const useStaffs = (params: Partial<StaffParams>) =>
-  useQuery<PageResponse<StaffRecord>>({
+export const useStaffs = (params: Partial<IStaffParams>) =>
+  useQuery<IPageResponse<IStaffRecord>>({
     queryKey: [QueryKeys.query, params],
     queryFn: () => StaffService.query(params),
     keepPreviousData: true,
@@ -25,7 +26,7 @@ export const useStaffs = (params: Partial<StaffParams>) =>
 export const useStaffMutation = (title = '新增') => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: Partial<StaffRequest>) => {
+    mutationFn: (req: Partial<IStaffRequest>) => {
       const submit = req.id ? StaffService.update : StaffService.create;
       return submit(req);
     },
@@ -47,7 +48,7 @@ export const useStaffMutation = (title = '新增') => {
 export const useStaffRoleMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: StaffRoleRequest) => {
+    mutationFn: (req: IStaffRoleRequest) => {
       const submit = StaffService.assignRole;
       return submit(req);
     },
@@ -69,7 +70,7 @@ export const useStaffRoleMutation = () => {
 export const useStaffDelete = () => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
-    mutationFn: (req: Partial<StaffRequest>) => StaffService.remove(req),
+    mutationFn: (req: Partial<IStaffRequest>) => StaffService.remove(req),
     onMutate: (variables) => {
       MessagePlugin.loading(`正在删除${variables.name}数据...`);
     },
@@ -84,7 +85,7 @@ export const useStaffDelete = () => {
   });
 
   const confirmRemove = (
-    record: Partial<StaffRecord>,
+    record: Partial<IStaffRecord>,
     onSuccess: () => boolean,
   ) => {
     const confirmDialog = DialogPlugin.confirm({

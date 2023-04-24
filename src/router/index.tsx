@@ -1,6 +1,6 @@
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, RouteObject } from 'react-router-dom';
 
-import { MenuRecord } from '@/api/system/menu/types';
+import ProtectedRoute from '@/components/protected-route';
 import PageLayout from '@/layouts/page-layout';
 import Login from '@/pages/auth/login';
 import Exception404 from '@/pages/system/exception/404';
@@ -8,7 +8,11 @@ import Home from '@/pages/system/home';
 
 import { LoadablePage } from '../components/lazy-component/index';
 
-export const generateRoutesFromMenus = (menus: MenuRecord[]): RouteObject[] => {
+import type { IMenuRecord } from '@/api/system/menu/types';
+
+export const generateRoutesFromMenus = (
+  menus: IMenuRecord[],
+): RouteObject[] => {
   const routes: RouteObject[] = [];
   menus.map((item) =>
     routes.push({
@@ -29,12 +33,20 @@ export const generateRoutesFromMenus = (menus: MenuRecord[]): RouteObject[] => {
 
 export const defaultRoutes: RouteObject[] = [
   {
+    path: '/',
+    element: <Navigate to={'/home'} replace={true} />,
+  },
+  {
     path: '/login',
     element: <Login />,
   },
   {
     path: '/home/*',
-    element: <PageLayout />,
+    element: (
+      <ProtectedRoute>
+        <PageLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -42,17 +54,6 @@ export const defaultRoutes: RouteObject[] = [
       },
     ],
   },
-  // {
-  //   id: 'root',
-  //   path: '/',
-  //   element: <Navigate to='/login' />,
-  //   // children: [
-  //   //   {
-  //   //     path: '*',
-  //   //     element: <div>403</div>,
-  //   //   },
-  //   // ],
-  // },
   {
     path: '*',
     element: <Exception404 />,

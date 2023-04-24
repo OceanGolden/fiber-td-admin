@@ -1,16 +1,19 @@
+import { DialogPlugin, MessagePlugin } from 'tdesign-react';
+
 import { SystemStatus, SystemTreeRoot } from '@/common/constants';
 import {
-  UseQueryOptions,
   useMutation,
   useQuery,
   useQueryClient,
+  UseQueryOptions,
 } from '@tanstack/react-query';
-import { DialogPlugin, MessagePlugin } from 'tdesign-react';
+
 import * as OrganizationService from './service';
+
 import type {
-  OrganizationParams,
-  OrganizationRecord,
-  OrganizationRequest,
+  IOrganizationParams,
+  IOrganizationRecord,
+  IOrganizationRequest,
 } from './types';
 
 export enum QueryKeys {
@@ -18,10 +21,10 @@ export enum QueryKeys {
 }
 
 export const useOrganizations = (
-  params: Partial<OrganizationParams>,
-  options?: UseQueryOptions<OrganizationRecord[]>,
+  params: Partial<IOrganizationParams>,
+  options?: UseQueryOptions<IOrganizationRecord[]>,
 ) => {
-  const queryInfo = useQuery<OrganizationRecord[]>({
+  const queryInfo = useQuery<IOrganizationRecord[]>({
     queryKey: [QueryKeys.query, params],
     queryFn: () => OrganizationService.queryTree(params),
     ...options,
@@ -41,7 +44,7 @@ export const useOrganizations = (
 export const useOrganizationMutation = (title = '新增') => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: Partial<OrganizationRequest>) => {
+    mutationFn: (req: Partial<IOrganizationRequest>) => {
       const submit = req.id
         ? OrganizationService.update
         : OrganizationService.create;
@@ -65,7 +68,7 @@ export const useOrganizationMutation = (title = '新增') => {
 export const useOrganizationDelete = () => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
-    mutationFn: (req: Partial<OrganizationRequest>) =>
+    mutationFn: (req: Partial<IOrganizationRequest>) =>
       OrganizationService.remove(req),
     onMutate: (variables) => {
       MessagePlugin.loading(`正在删除${variables.name}数据...`);
@@ -81,7 +84,7 @@ export const useOrganizationDelete = () => {
     },
   });
 
-  const confirmRemove = (record: Partial<OrganizationRecord>) => {
+  const confirmRemove = (record: Partial<IOrganizationRecord>) => {
     const confirmDialog = DialogPlugin.confirm({
       destroyOnClose: true,
       header: '确认删除当前所选组织?',

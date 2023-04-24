@@ -1,13 +1,13 @@
-import { MenuRecord } from '../system/menu/types';
-import { StaffRecord } from '../system/staff/types';
+import type { IMenuRecord } from '../system/menu/types';
+import type { IStaffRecord } from '../system/staff/types';
 
-export interface LoginRequest {
+export interface ILoginRequest {
   username: string;
   password: string;
   isRemember: boolean;
 }
 
-export interface LoginResponse {
+export interface ILoginResponse {
   // id: string;
   // username: string;
   // avatar: string;
@@ -15,8 +15,8 @@ export interface LoginResponse {
   refresh: string;
 }
 
-export interface UserInfoState {
-  staff: Partial<StaffRecord>;
-  menus: MenuRecord[];
+export interface IUserInfoState {
+  staff: Partial<IStaffRecord>;
+  menus: IMenuRecord[];
   permissions: string[];
 }

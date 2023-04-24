@@ -1,10 +1,10 @@
 import { useAtomValue } from 'jotai';
 import { loadable } from 'jotai/utils';
 
-import { UserInfoState } from '@/api/auth/types';
+import { IUserInfoState } from '@/api/auth/types';
 import { userInfoAsyncAtom } from '@/atom/user_atom';
 
-const useUserInfo = (): [UserInfoState, boolean] => {
+const useUserInfo = (): [IUserInfoState, boolean] => {
   const loadableAtom = loadable(userInfoAsyncAtom);
   const value = useAtomValue(loadableAtom);
   const empty = { staff: {}, menus: [], permissions: [] };

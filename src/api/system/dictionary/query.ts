@@ -1,19 +1,22 @@
-import type { PageResponse } from '@/common/types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { IPageResponse } from '@/common/types';
 import { DialogPlugin, MessagePlugin } from 'tdesign-react';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import * as DictionaryService from './service';
+
 import type {
-  DictionaryParams,
-  DictionaryRecord,
-  DictionaryRequest,
+  IDictionaryParams,
+  IDictionaryRecord,
+  IDictionaryRequest,
 } from './types';
 
 export enum QueryKeys {
   query = 'dictionary-query',
 }
 
-export const useDictionaries = (params: Partial<DictionaryParams>) =>
-  useQuery<PageResponse<DictionaryRecord>>({
+export const useDictionaries = (params: Partial<IDictionaryParams>) =>
+  useQuery<IPageResponse<IDictionaryRecord>>({
     queryKey: [QueryKeys.query, params],
     queryFn: () => DictionaryService.query(params),
     keepPreviousData: true,
@@ -22,7 +25,7 @@ export const useDictionaries = (params: Partial<DictionaryParams>) =>
 export const useDictionaryMutation = (title = '新增') => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: Partial<DictionaryRequest>) => {
+    mutationFn: (req: Partial<IDictionaryRequest>) => {
       const submit = req.id
         ? DictionaryService.update
         : DictionaryService.create;
@@ -46,7 +49,7 @@ export const useDictionaryMutation = (title = '新增') => {
 export const useDictionaryDelete = () => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
-    mutationFn: (req: Partial<DictionaryRequest>) =>
+    mutationFn: (req: Partial<IDictionaryRequest>) =>
       DictionaryService.remove(req),
     onMutate: (variables) => {
       MessagePlugin.loading(`正在删除${variables.name}数据...`);
@@ -62,7 +65,7 @@ export const useDictionaryDelete = () => {
   });
 
   const confirmRemove = (
-    record: Partial<DictionaryRecord>,
+    record: Partial<IDictionaryRecord>,
     onSuccess: () => boolean,
   ) => {
     const confirmDialog = DialogPlugin.confirm({

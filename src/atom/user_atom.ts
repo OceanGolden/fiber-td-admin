@@ -3,7 +3,7 @@ import { selectAtom } from 'jotai/utils';
 
 import * as AuthService from '@/api/auth/service';
 
-import type { UserInfoState } from '@/api/auth/types';
+import type { IUserInfoState } from '@/api/auth/types';
 
 export const userInfoAsyncAtom = atom(async () => AuthService.info());
 
@@ -14,5 +14,5 @@ export const userInfoAsyncAtom = atom(async () => AuthService.info());
 
 export const staffAtom = selectAtom(
   userInfoAsyncAtom,
-  (s: UserInfoState) => s.staff,
+  (s: IUserInfoState) => s.staff,
 );

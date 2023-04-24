@@ -4,11 +4,11 @@ import { useMutation } from '@tanstack/react-query';
 
 import * as AuthService from './service';
 
-import type { LoginRequest } from './types';
+import type { ILoginRequest } from './types';
 
 export const useLoginMutation = (title = '登录') =>
   useMutation(
-    (req: Partial<LoginRequest>) => {
+    (req: Partial<ILoginRequest>) => {
       const submit = AuthService.login;
       return submit(req);
     },

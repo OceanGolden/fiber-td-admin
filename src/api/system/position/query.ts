@@ -1,14 +1,21 @@
 import type { UseQueryOptions } from '@tanstack/react-query';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { DialogPlugin, MessagePlugin } from 'tdesign-react';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import * as PositionService from './service';
-import type { PositionParams, PositionRecord, PositionRequest } from './types';
+
+import type {
+  IPositionParams,
+  IPositionRecord,
+  IPositionRequest,
+} from './types';
 
 export enum QueryKeys {
   query = 'position-query',
 }
 
-export const usePositions = (params: Partial<PositionParams>) =>
+export const usePositions = (params: Partial<IPositionParams>) =>
   useQuery({
     queryKey: [QueryKeys.query, params],
     queryFn: () => PositionService.query(params),
@@ -16,8 +23,8 @@ export const usePositions = (params: Partial<PositionParams>) =>
   });
 
 export const usePositionsAll = (
-  params: Partial<PositionParams>,
-  options?: UseQueryOptions<PositionRecord[]>,
+  params: Partial<IPositionParams>,
+  options?: UseQueryOptions<IPositionRecord[]>,
 ) =>
   useQuery({
     queryKey: [QueryKeys.query, 'all', params],
@@ -28,7 +35,7 @@ export const usePositionsAll = (
 export const usePositionMutation = (title = '新增') => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (req: Partial<PositionRequest>) => {
+    mutationFn: (req: Partial<IPositionRequest>) => {
       const submit = req.id ? PositionService.update : PositionService.create;
       return submit(req);
     },
@@ -50,7 +57,7 @@ export const usePositionMutation = (title = '新增') => {
 export const usePositionDelete = () => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
-    mutationFn: (req: Partial<PositionRequest>) => PositionService.remove(req),
+    mutationFn: (req: Partial<IPositionRequest>) => PositionService.remove(req),
     onMutate: (variables) => {
       MessagePlugin.loading(`正在删除${variables.name}数据...`);
     },
@@ -65,7 +72,7 @@ export const usePositionDelete = () => {
   });
 
   const confirmRemove = (
-    record: Partial<PositionRecord>,
+    record: Partial<IPositionRecord>,
     onSuccess: () => boolean,
   ) => {
     const confirmDialog = DialogPlugin.confirm({
