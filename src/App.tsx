@@ -1,11 +1,6 @@
-import { useAtomValue } from 'jotai';
-import { Suspense } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Loading } from 'tdesign-react';
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { routesAtom } from './atom/route_atom';
+import Router from './router';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,21 +10,10 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => {
-  const routes = useAtomValue(routesAtom);
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<Loading fullscreen={true} />}>
-        <RouterProvider
-          router={createBrowserRouter(routes)}
-          fallbackElement={<Loading />}
-        />
-      </Suspense>
-      {/* <BrowserRouter>
-        <PublicRoutes />
-      </BrowserRouter> */}
-    </QueryClientProvider>
-  );
-};
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <Router />
+  </QueryClientProvider>
+);
 
 export default App;

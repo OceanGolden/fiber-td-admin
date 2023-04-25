@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { Token } from '@/common/constants';
 import Storage from '@/utils/storage';
@@ -14,9 +14,12 @@ interface IAccessToken {
   issued_at: number;
   expired_at: number;
 }
-const PrivateRoute = (props: IProps) => {
+
+const RouterGuard = (props: IProps) => {
+  const location = useLocation();
   const token = Storage.get(Token.Access);
   const isLogin = Boolean(token);
+
   if (token) {
     try {
       const decodeToken: IAccessToken = jwtDecode(token);
@@ -29,7 +32,10 @@ const PrivateRoute = (props: IProps) => {
       return <Navigate to='/login' />;
     }
   }
+  if (location.pathname === '/login') {
+    return <>{props.children}</>;
+  }
   return <Navigate to='/login' />;
 };
 
-export default PrivateRoute;
+export default RouterGuard;

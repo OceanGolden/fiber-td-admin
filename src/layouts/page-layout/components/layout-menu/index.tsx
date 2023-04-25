@@ -7,7 +7,8 @@ import { Button, Menu } from 'tdesign-react';
 import { menusAtom } from '@/atom/menu_atom';
 import { routesAtom } from '@/atom/route_atom';
 import useToggle from '@/hooks/use_toggle';
-import { defaultRoutes, generateRoutesFromMenus } from '@/router';
+import { ConstantsRoutes } from '@/router/constants';
+import { generateRoutesFromMenus } from '@/router/helper';
 
 import type { IMenuRecord } from '@/api/system/menu/types';
 
@@ -18,10 +19,9 @@ const LayoutMenu = () => {
   const navigate = useNavigate();
   const setRoutesAtom = useSetAtom(routesAtom);
 
-  useEffect(
-    () => setRoutesAtom([...defaultRoutes, ...generateRoutesFromMenus(menus)]),
-    [menus],
-  );
+  useEffect(() => {
+    setRoutesAtom([...ConstantsRoutes, ...generateRoutesFromMenus(menus)]);
+  }, [menus]);
 
   const renderMenu = (menuList: IMenuRecord[]) => {
     if (!menuList) {

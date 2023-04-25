@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { RouteObject } from 'react-router-dom';
 
-import { defaultRoutes } from '@/router';
+import { ConstantsRoutes } from '@/router/constants';
 
-export const routesAtom = atom<RouteObject[]>(defaultRoutes);
+export const routesAtom = atom<RouteObject[]>(ConstantsRoutes);

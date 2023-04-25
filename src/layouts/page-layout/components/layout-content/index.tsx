@@ -4,7 +4,7 @@ import { Layout } from 'tdesign-react';
 const LayoutContent = () => (
   <Layout.Content className='flex flex-col'>
     {/* <Breadcrumb /> */}
-    <div className='flex px-6 py-4'>
+    <div className='flex px-6 py-4 h-full'>
       <Outlet />
     </div>
   </Layout.Content>
